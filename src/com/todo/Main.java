@@ -6,5 +6,6 @@ public class Main {
 		
 		TodoMain.start();
 		
+		System.out.println(" hi ");
 	}
 }
