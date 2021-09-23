@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.*;
 
 import com.todo.dao.TodoItem;
@@ -30,7 +29,7 @@ public class TodoUtil {
 		}
 		
 		System.out.println("내용 : ");
-		desc = sc.next();
+		desc = sc.nextLine();
 		
 		TodoItem t = new TodoItem(title, desc);
 		list.addItem(t);
@@ -101,22 +100,22 @@ public class TodoUtil {
 	public static void loadList(TodoList l, String filename) {
 		File file = new File(filename); // File객체 생성 
 		if(file.exists()){ 
-			 BufferedReader reader;
+			BufferedReader r;
+			int i=0;
 			try {
-				reader = new BufferedReader(new FileReader(file));
+				r = new BufferedReader(new FileReader(file));
 			 	String line = null; 
 			 	try {
-					while ((line = reader.readLine()) != null){ 
-						System.out.println(line);
+					while ((line = r.readLine()) != null){ 
 						StringTokenizer st = new StringTokenizer(line, "##");
 						String title = st.nextToken();
 						String desc = st.nextToken();
 						String current_date = st.nextToken();
 						TodoItem t = new TodoItem(title, desc, current_date);
 						l.addItem(t);
-						
-					 	reader.close(); 
+						i++;
 					}
+					r.close(); 
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -125,18 +124,22 @@ public class TodoUtil {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			System.out.println(i+"개의 할 일이 존재함");
 		}
+		else System.out.println("todolist.txt 파일이 존재하지 않음.");
 		
 	}
 	
 	public static void saveList(TodoList l, String filename) {
-		Writer w;
+		File file = new File(filename); 
+		FileWriter w;
 		try {
-			w = new FileWriter(filename);
+			w = new FileWriter(file, false);
 			for (TodoItem item : l.getList()) {
-				w.write(item.toString());
+				w.write(item.toSaveString());
 			}
 			w.close();
+			System.out.println("**모든 데이터 저장됨.**");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
