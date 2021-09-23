@@ -1,5 +1,12 @@
 package com.todo.service;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.*;
 
 import com.todo.dao.TodoItem;
@@ -92,12 +99,49 @@ public class TodoUtil {
 	}
 
 	public static void loadList(TodoList l, String filename) {
-		// TODO Auto-generated method stub
+		File file = new File(filename); // File°´Ã¼ »ý¼º 
+		if(file.exists()){ 
+			 BufferedReader reader;
+			try {
+				reader = new BufferedReader(new FileReader(file));
+			 	String line = null; 
+			 	try {
+					while ((line = reader.readLine()) != null){ 
+						System.out.println(line);
+						StringTokenizer st = new StringTokenizer(line, "##");
+						String title = st.nextToken();
+						String desc = st.nextToken();
+						String current_date = st.nextToken();
+						TodoItem t = new TodoItem(title, desc, current_date);
+						l.addItem(t);
+						
+					 	reader.close(); 
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 		
 	}
 	
 	public static void saveList(TodoList l, String filename) {
-		// TODO Auto-generated method stub
-		
+		Writer w;
+		try {
+			w = new FileWriter(filename);
+			for (TodoItem item : l.getList()) {
+				w.write(item.toString());
+			}
+			w.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
