@@ -55,14 +55,12 @@ public class TodoUtil {
 			return;
 		}
 
-		int i=1;
 		for (TodoItem item : l.getList()) {
-			if (num==i) {
-				System.out.println(i + ". " + item.toString());
+			if (num == l.indexOf(item)) {
+				System.out.println(l.indexOf(item) + ". " + item.toString());
 				l.deleteItem(item);
 				break;
 			}
-			i++;
 		}
 		System.out.println("할 일 목록에서 삭제되었습니다.\n");
 	}
@@ -97,25 +95,21 @@ public class TodoUtil {
 		System.out.println("할 일의 새 마감일을 입력하세요(년/월/일): ");
 		String new_due_date = sc.next().trim();
 		
-		int i=1;
 		for (TodoItem item : l.getList()) {
-			if (num==i) {
+			if (num == l.indexOf(item)) {
 				l.deleteItem(item);
 				TodoItem t = new TodoItem(new_category,new_title, new_description, new_due_date);
 				l.addItem(t);
 				System.out.println("할 일이 수정되었습니다.\n");
 				break;
 			}
-			i++;
 		}
 	}
 
 	public static void listAll(TodoList l) {
-		int num = 1;
 		System.out.println("<할 일 목록>");
 		for (TodoItem item : l.getList()) {
-			System.out.println(num + ". " + item.toString());
-			num++;
+			System.out.println(l.indexOf(item) + ". " + item.toString());
 		}
 	}
 
@@ -172,4 +166,15 @@ public class TodoUtil {
 		}
 	}
 
+
+	public static void findKeyword(TodoList l, String key) {
+		int num=0;
+		for (TodoItem item : l.getList()) {
+			if (item.getTitle().contains(key) || item.getDesc().contains(key)) {
+				System.out.println(l.indexOf(item) + ". " + item.toString());
+				num++;
+			}
+		}
+		System.out.println("총 " + num+ "개의 할 일을 찾았습니다.\n");
+	}
 }

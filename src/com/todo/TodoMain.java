@@ -60,7 +60,12 @@ public class TodoMain {
 				isList = true;
 				System.out.println("수정 날짜순 정렬 완료\n");
 				break;
-
+				
+			case "find":
+				String word = sc.nextLine().trim();
+				TodoUtil.findKeyword(l, word);
+				break;
+				
 			case "exit":
 				quit = true;
 				break;
