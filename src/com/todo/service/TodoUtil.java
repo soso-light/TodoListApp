@@ -30,7 +30,7 @@ public class TodoUtil {
 			System.out.printf("제목은 중복될 수 없습니다.");
 			return;
 		}
-		
+		sc.nextLine();
 		System.out.println("내용 : ");
 		desc = sc.nextLine();
 		
@@ -56,8 +56,8 @@ public class TodoUtil {
 		}
 
 		for (TodoItem item : l.getList()) {
-			if (num == l.indexOf(item)) {
-				System.out.println(l.indexOf(item) + ". " + item.toString());
+			if (num == (l.indexOf(item)+1)) {
+				System.out.println((l.indexOf(item)+1) + ". " + item.toString());
 				l.deleteItem(item);
 				break;
 			}
@@ -88,7 +88,7 @@ public class TodoUtil {
 			System.out.println("제목은 중복될 수 없습니다.");
 			return;
 		}
-		
+		sc.nextLine();
 		System.out.println("새로운 내용을 입력하세요 : ");
 		String new_description = sc.nextLine().trim();
 		
@@ -96,7 +96,7 @@ public class TodoUtil {
 		String new_due_date = sc.next().trim();
 		
 		for (TodoItem item : l.getList()) {
-			if (num == l.indexOf(item)) {
+			if (num == (l.indexOf(item)+1)) {
 				l.deleteItem(item);
 				TodoItem t = new TodoItem(new_category,new_title, new_description, new_due_date);
 				l.addItem(t);
@@ -109,7 +109,7 @@ public class TodoUtil {
 	public static void listAll(TodoList l) {
 		System.out.println("<할 일 목록>");
 		for (TodoItem item : l.getList()) {
-			System.out.println(l.indexOf(item) + ". " + item.toString());
+			System.out.println((l.indexOf(item)+1) + ". " + item.toString());
 		}
 	}
 
@@ -171,7 +171,7 @@ public class TodoUtil {
 		int num=0;
 		for (TodoItem item : l.getList()) {
 			if (item.getTitle().contains(key) || item.getDesc().contains(key)) {
-				System.out.println(l.indexOf(item) + ". " + item.toString());
+				System.out.println((l.indexOf(item)+1) + ". " + item.toString());
 				num++;
 			}
 		}
